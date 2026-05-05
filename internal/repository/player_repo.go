@@ -71,3 +71,20 @@ func (r *PlayerRepository) GetByID(id int) (*models.Player, error) {
 
 	return &p, nil
 }
+
+func (r *PlayerRepository) Create(p *models.Player) error {
+	return r.DB.QueryRow(`
+		INSERT INTO players (name, team, image_url, championships, mvp, finals_mvp, dpoy, roty)
+		VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+		RETURNING id
+	`,
+		p.Name,
+		p.Team,
+		p.ImageURL,
+		p.Championships,
+		p.MVP,
+		p.FinalsMVP,
+		p.DPOY,
+		p.ROTY,
+	).Scan(&p.ID)
+}

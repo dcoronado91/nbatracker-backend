@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"nbatracker-backend/internal/models"
 	"nbatracker-backend/internal/services"
 	"net/http"
 	"strconv"
@@ -46,4 +47,24 @@ func (h *PlayerHandler) GetPlayerByID(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(player)
+}
+
+func (h *PlayerHandler) CreatePlayer(w http.ResponseWriter, r *http.Request) {
+	var p models.Player
+
+	err := json.NewDecoder(r.Body).Decode(&p)
+	if err != nil {
+		http.Error(w, "JSON inválido", http.StatusBadRequest)
+		return
+	}
+
+	err = h.Service.CreatePlayer(&p)
+	if err != nil {
+		http.Error(w, "Error al crear jugador", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(p)
 }

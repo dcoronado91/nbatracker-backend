@@ -17,3 +17,7 @@ func (s *PlayerService) GetPlayers() ([]models.Player, error) {
 func (s *PlayerService) GetPlayerByID(id int) (*models.Player, error) {
 	return s.Repo.GetByID(id)
 }
+
+func (s *PlayerService) CreatePlayer(p *models.Player) error {
+	return s.Repo.Create(p)
+}
