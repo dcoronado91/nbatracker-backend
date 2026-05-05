@@ -10,4 +10,5 @@ type Player struct {
 	FinalsMVP     int    `json:"finals_mvp"`
 	DPOY          int    `json:"dpoy"`
 	ROTY          int    `json:"roty"`
+	CreatedAt     string `json:"created_at"` // 👈 nuevo campo
 }

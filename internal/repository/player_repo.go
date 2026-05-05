@@ -22,9 +22,16 @@ func (r *PlayerRepository) GetAll() ([]models.Player, error) {
 	for rows.Next() {
 		var p models.Player
 		err := rows.Scan(
-			&p.ID, &p.Name, &p.Team, &p.ImageURL,
-			&p.Championships, &p.MVP, &p.FinalsMVP,
-			&p.DPOY, &p.ROTY,
+			&p.ID,
+			&p.Name,
+			&p.Team,
+			&p.ImageURL,
+			&p.Championships,
+			&p.MVP,
+			&p.FinalsMVP,
+			&p.DPOY,
+			&p.ROTY,
+			&p.CreatedAt,
 		)
 		if err != nil {
 			return nil, err

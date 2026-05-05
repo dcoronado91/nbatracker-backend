@@ -1,10 +1,10 @@
-// internal/handlers/players.go
 package handlers
 
 import (
 	"encoding/json"
-	"nbatracker-backend/internal/services"
 	"net/http"
+
+	"nbatracker-backend/internal/services"
 )
 
 type PlayerHandler struct {
@@ -12,11 +12,12 @@ type PlayerHandler struct {
 }
 
 func (h *PlayerHandler) GetPlayers(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-
-	response := map[string]string{
-		"message": "ok",
+	players, err := h.Service.GetPlayers()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
-	json.NewEncoder(w).Encode(response)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(players)
 }
