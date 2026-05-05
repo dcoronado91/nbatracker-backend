@@ -26,6 +26,8 @@ func RegisterRoutes(mux *http.ServeMux, handler *handlers.PlayerHandler) {
 			handler.GetPlayerByID(w, r)
 		case http.MethodPut:
 			handler.UpdatePlayer(w, r)
+		case http.MethodDelete:
+			handler.DeletePlayer(w, r)
 		default:
 			http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
 		}

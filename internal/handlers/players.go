@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"database/sql"
 	"encoding/json"
 	"nbatracker-backend/internal/models"
 	"nbatracker-backend/internal/services"
@@ -105,4 +106,32 @@ func (h *PlayerHandler) UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(updatedPlayer)
+}
+
+func (h *PlayerHandler) DeletePlayer(w http.ResponseWriter, r *http.Request) {
+	parts := strings.Split(r.URL.Path, "/")
+
+	if len(parts) < 3 {
+		http.Error(w, "ID requerido", http.StatusBadRequest)
+		return
+	}
+
+	id, err := strconv.Atoi(parts[2])
+	if err != nil {
+		http.Error(w, "ID inválido", http.StatusBadRequest)
+		return
+	}
+
+	err = h.Service.DeletePlayer(id)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			http.Error(w, "Jugador no encontrado", http.StatusNotFound)
+			return
+		}
+		http.Error(w, "Error al eliminar jugador", http.StatusInternalServerError)
+		return
+	}
+
+	// 👇 REST correcto
+	w.WriteHeader(http.StatusNoContent)
 }

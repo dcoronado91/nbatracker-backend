@@ -25,3 +25,7 @@ func (s *PlayerService) CreatePlayer(p *models.Player) error {
 func (s *PlayerService) UpdatePlayer(id int, p *models.Player) error {
 	return s.Repo.Update(id, p)
 }
+
+func (s *PlayerService) DeletePlayer(id int) error {
+	return s.Repo.Delete(id)
+}

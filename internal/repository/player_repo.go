@@ -109,3 +109,25 @@ func (r *PlayerRepository) Update(id int, p *models.Player) error {
 
 	return err
 }
+
+func (r *PlayerRepository) Delete(id int) error {
+	result, err := r.DB.Exec(`
+		DELETE FROM players
+		WHERE id = $1
+	`, id)
+
+	if err != nil {
+		return err
+	}
+
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		return sql.ErrNoRows
+	}
+
+	return nil
+}
