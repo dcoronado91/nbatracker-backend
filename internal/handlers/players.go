@@ -3,17 +3,19 @@ package handlers
 import (
 	"database/sql"
 	"encoding/json"
-	"nbatracker-backend/internal/models"
-	"nbatracker-backend/internal/services"
 	"net/http"
 	"strconv"
 	"strings"
+
+	"nbatracker-backend/internal/models"
+	"nbatracker-backend/internal/services"
 )
 
 type PlayerHandler struct {
 	Service *services.PlayerService
 }
 
+// GET /players
 func (h *PlayerHandler) GetPlayers(w http.ResponseWriter, r *http.Request) {
 	players, err := h.Service.GetPlayers()
 	if err != nil {
@@ -25,8 +27,8 @@ func (h *PlayerHandler) GetPlayers(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(players)
 }
 
+// GET /players/:id
 func (h *PlayerHandler) GetPlayerByID(w http.ResponseWriter, r *http.Request) {
-	// URL ejemplo: /players/1
 	parts := strings.Split(r.URL.Path, "/")
 
 	if len(parts) < 3 {
@@ -50,12 +52,19 @@ func (h *PlayerHandler) GetPlayerByID(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(player)
 }
 
+// POST /players
 func (h *PlayerHandler) CreatePlayer(w http.ResponseWriter, r *http.Request) {
 	var p models.Player
 
 	err := json.NewDecoder(r.Body).Decode(&p)
 	if err != nil {
 		http.Error(w, "JSON inválido", http.StatusBadRequest)
+		return
+	}
+
+	// validación de numeros negativos
+	if p.Championships < 0 || p.MVP < 0 || p.FinalsMVP < 0 || p.DPOY < 0 || p.ROTY < 0 {
+		http.Error(w, "Los valores no pueden ser negativos", http.StatusBadRequest)
 		return
 	}
 
@@ -70,6 +79,7 @@ func (h *PlayerHandler) CreatePlayer(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(p)
 }
 
+// PUT /players/:id
 func (h *PlayerHandler) UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 	parts := strings.Split(r.URL.Path, "/")
 
@@ -91,13 +101,19 @@ func (h *PlayerHandler) UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// validacion de campos numericos no negativos
+	if p.Championships < 0 || p.MVP < 0 || p.FinalsMVP < 0 || p.DPOY < 0 || p.ROTY < 0 {
+		http.Error(w, "Los valores no pueden ser negativos", http.StatusBadRequest)
+		return
+	}
+
 	err = h.Service.UpdatePlayer(id, &p)
 	if err != nil {
 		http.Error(w, "Error al actualizar jugador", http.StatusInternalServerError)
 		return
 	}
 
-	// 👇 CONSULTAR EL JUGADOR ACTUALIZADO
+	// devolver jugador actualizado
 	updatedPlayer, err := h.Service.GetPlayerByID(id)
 	if err != nil {
 		http.Error(w, "Error al obtener jugador actualizado", http.StatusInternalServerError)
@@ -108,6 +124,7 @@ func (h *PlayerHandler) UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(updatedPlayer)
 }
 
+// DELETE /players/:id
 func (h *PlayerHandler) DeletePlayer(w http.ResponseWriter, r *http.Request) {
 	parts := strings.Split(r.URL.Path, "/")
 
@@ -132,6 +149,5 @@ func (h *PlayerHandler) DeletePlayer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 👇 REST correcto
 	w.WriteHeader(http.StatusNoContent)
 }
