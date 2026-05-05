@@ -8,4 +8,5 @@ import (
 
 func RegisterRoutes(mux *http.ServeMux, h *handlers.PlayerHandler) {
     mux.HandleFunc("/players", h.GetPlayers)
+    mux.HandleFunc("/players/", h.GetPlayerByID)
 }

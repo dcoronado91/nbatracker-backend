@@ -13,3 +13,7 @@ type PlayerService struct {
 func (s *PlayerService) GetPlayers() ([]models.Player, error) {
     return s.Repo.GetAll()
 }
+
+func (s *PlayerService) GetPlayerByID(id int) (*models.Player, error) {
+	return s.Repo.GetByID(id)
+}

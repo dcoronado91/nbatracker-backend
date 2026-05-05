@@ -41,3 +41,33 @@ func (r *PlayerRepository) GetAll() ([]models.Player, error) {
 
 	return players, nil
 }
+
+func (r *PlayerRepository) GetByID(id int) (*models.Player, error) {
+	row := r.DB.QueryRow(`
+		SELECT id, name, team, image_url,
+		    championships, mvp, finals_mvp, dpoy, roty, created_at
+		FROM players
+		WHERE id = $1
+	`, id)
+
+	var p models.Player
+
+	err := row.Scan(
+		&p.ID,
+		&p.Name,
+		&p.Team,
+		&p.ImageURL,
+		&p.Championships,
+		&p.MVP,
+		&p.FinalsMVP,
+		&p.DPOY,
+		&p.ROTY,
+		&p.CreatedAt,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &p, nil
+}
