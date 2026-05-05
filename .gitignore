@@ -1,0 +1,14 @@
+# binarios
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# output de build
+/bin
+/build
+
+# archivos temporales
+*.log
+*.tmp
