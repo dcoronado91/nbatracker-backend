@@ -1,30 +1,52 @@
-// cmd/server/main.go
 package main
 
 import (
-    "log"
-    "net/http"
+	"log"
+	"net/http"
+	"os"
 
-    "nbatracker-backend/internal/db"
-    "nbatracker-backend/internal/repository"
-    "nbatracker-backend/internal/services"
-    "nbatracker-backend/internal/handlers"
-    "nbatracker-backend/internal/routes"
+	"github.com/joho/godotenv"
+
+	"nbatracker-backend/internal/db"
+	"nbatracker-backend/internal/handlers"
+	"nbatracker-backend/internal/repository"
+	"nbatracker-backend/internal/routes"
+	"nbatracker-backend/internal/services"
 )
 
 func main() {
-    database, err := db.Connect()
-    if err != nil {
-        log.Fatal(err)
-    }
+	// Cargar variables de entorno
+	err := godotenv.Load()
+	if err != nil {
+		log.Println("No se pudo cargar .env, usando variables del sistema")
+	}
 
-    repo := &repository.PlayerRepository{DB: database}
-    service := &services.PlayerService{Repo: repo}
-    handler := &handlers.PlayerHandler{Service: service}
+	// Conectar a la base de datos
+	database, err := db.Connect()
+	if err != nil {
+		log.Fatal("Error conectando a la base de datos:", err)
+	}
 
-    mux := http.NewServeMux()
-    routes.RegisterRoutes(mux, handler)
+	// Inicializar capas
+	repo := &repository.PlayerRepository{DB: database}
+	service := &services.PlayerService{Repo: repo}
+	handler := &handlers.PlayerHandler{Service: service}
 
-    log.Println("Server running on :8080")
-    http.ListenAndServe(":8080", mux)
+	// Configurar rutas
+	mux := http.NewServeMux()
+	routes.RegisterRoutes(mux, handler)
+
+	// Obtener puerto desde .env o usar 8080 por defecto
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Println("Servidor corriendo en http://localhost:" + port)
+
+	// Levantar servidor
+	err = http.ListenAndServe(":"+port, mux)
+	if err != nil {
+		log.Fatal("Error al iniciar el servidor:", err)
+	}
 }
