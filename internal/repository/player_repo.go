@@ -88,3 +88,24 @@ func (r *PlayerRepository) Create(p *models.Player) error {
 		p.ROTY,
 	).Scan(&p.ID)
 }
+
+func (r *PlayerRepository) Update(id int, p *models.Player) error {
+	_, err := r.DB.Exec(`
+		UPDATE players
+		SET name=$1, team=$2, image_url=$3,
+		    championships=$4, mvp=$5, finals_mvp=$6, dpoy=$7, roty=$8
+		WHERE id=$9
+	`,
+		p.Name,
+		p.Team,
+		p.ImageURL,
+		p.Championships,
+		p.MVP,
+		p.FinalsMVP,
+		p.DPOY,
+		p.ROTY,
+		id,
+	)
+
+	return err
+}

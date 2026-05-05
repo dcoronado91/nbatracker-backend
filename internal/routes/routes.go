@@ -20,5 +20,14 @@ func RegisterRoutes(mux *http.ServeMux, handler *handlers.PlayerHandler) {
 	})
 
 	// GET /players/:id
-	mux.HandleFunc("/players/", handler.GetPlayerByID)
+	mux.HandleFunc("/players/", func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
+		case http.MethodGet:
+			handler.GetPlayerByID(w, r)
+		case http.MethodPut:
+			handler.UpdatePlayer(w, r)
+		default:
+			http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
+		}
+	})
 }
