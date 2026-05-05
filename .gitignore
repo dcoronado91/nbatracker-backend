@@ -12,3 +12,6 @@
 # archivos temporales
 *.log
 *.tmp
+
+# archivos de configuración local
+*.env
