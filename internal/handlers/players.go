@@ -15,16 +15,51 @@ type PlayerHandler struct {
 	Service *services.PlayerService
 }
 
-// GET /players
+type paginatedResponse struct {
+	Data  []models.Player `json:"data"`
+	Total int             `json:"total"`
+	Page  int             `json:"page"`
+	Limit int             `json:"limit"`
+	Pages int             `json:"pages"`
+}
+
+// GET /players?page=1&limit=10
 func (h *PlayerHandler) GetPlayers(w http.ResponseWriter, r *http.Request) {
-	players, err := h.Service.GetPlayers()
+	page := 1
+	limit := 9
+
+	if p := r.URL.Query().Get("page"); p != "" {
+		if v, err := strconv.Atoi(p); err == nil && v > 0 {
+			page = v
+		}
+	}
+	if l := r.URL.Query().Get("limit"); l != "" {
+		if v, err := strconv.Atoi(l); err == nil && v > 0 && v <= 100 {
+			limit = v
+		}
+	}
+
+	players, total, err := h.Service.GetPlayersPaginated(page, limit)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
+	pages := (total + limit - 1) / limit
+
+	resp := paginatedResponse{
+		Data:  players,
+		Total: total,
+		Page:  page,
+		Limit: limit,
+		Pages: pages,
+	}
+	if resp.Data == nil {
+		resp.Data = []models.Player{}
+	}
+
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(players)
+	json.NewEncoder(w).Encode(resp)
 }
 
 // GET /players/:id

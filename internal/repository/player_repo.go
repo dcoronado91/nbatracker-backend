@@ -11,7 +11,7 @@ type PlayerRepository struct {
 }
 
 func (r *PlayerRepository) GetAll() ([]models.Player, error) {
-	rows, err := r.DB.Query("SELECT * FROM players")
+	rows, err := r.DB.Query("SELECT * FROM players ORDER BY id")
 	if err != nil {
 		return nil, err
 	}
@@ -40,6 +40,50 @@ func (r *PlayerRepository) GetAll() ([]models.Player, error) {
 	}
 
 	return players, nil
+}
+
+func (r *PlayerRepository) GetPaginated(page, limit int) ([]models.Player, int, error) {
+	var total int
+	err := r.DB.QueryRow("SELECT COUNT(*) FROM players").Scan(&total)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	offset := (page - 1) * limit
+	rows, err := r.DB.Query(`
+		SELECT id, name, team, image_url,
+		    championships, mvp, finals_mvp, dpoy, roty, created_at
+		FROM players
+		ORDER BY id
+		LIMIT $1 OFFSET $2
+	`, limit, offset)
+	if err != nil {
+		return nil, 0, err
+	}
+	defer rows.Close()
+
+	var players []models.Player
+	for rows.Next() {
+		var p models.Player
+		err := rows.Scan(
+			&p.ID,
+			&p.Name,
+			&p.Team,
+			&p.ImageURL,
+			&p.Championships,
+			&p.MVP,
+			&p.FinalsMVP,
+			&p.DPOY,
+			&p.ROTY,
+			&p.CreatedAt,
+		)
+		if err != nil {
+			return nil, 0, err
+		}
+		players = append(players, p)
+	}
+
+	return players, total, nil
 }
 
 func (r *PlayerRepository) GetByID(id int) (*models.Player, error) {
