@@ -15,28 +15,29 @@ import (
 )
 
 func main() {
-	// Cargar variables de entorno
 	err := godotenv.Load()
 	if err != nil {
 		log.Println("No se pudo cargar .env, usando variables del sistema")
 	}
 
-	// Conectar a la base de datos
 	database, err := db.Connect()
 	if err != nil {
 		log.Fatal("Error conectando a la base de datos:", err)
 	}
 
-	// Inicializar capas
-	repo := &repository.PlayerRepository{DB: database}
-	service := &services.PlayerService{Repo: repo}
-	handler := &handlers.PlayerHandler{Service: service}
+	// Players
+	playerRepo    := &repository.PlayerRepository{DB: database}
+	playerService := &services.PlayerService{Repo: playerRepo}
+	playerHandler := &handlers.PlayerHandler{Service: playerService}
 
-	// Configurar rutas
+	// Teams
+	teamRepo    := &repository.TeamRepository{DB: database}
+	teamService := &services.TeamService{Repo: teamRepo}
+	teamHandler := &handlers.TeamHandler{Service: teamService}
+
 	mux := http.NewServeMux()
-	routes.RegisterRoutes(mux, handler)
+	routes.RegisterRoutes(mux, playerHandler, teamHandler)
 
-	// Obtener puerto desde .env o usar 8080 por defecto
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
@@ -44,7 +45,6 @@ func main() {
 
 	log.Println("Servidor corriendo en http://localhost:" + port)
 
-	// Levantar servidor
 	err = http.ListenAndServe(":"+port, enableCORS(mux))
 	if err != nil {
 		log.Fatal("Error al iniciar el servidor:", err)
