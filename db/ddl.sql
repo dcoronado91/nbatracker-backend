@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS teams;
 DROP TABLE IF EXISTS players;
 
 CREATE TABLE players (
@@ -10,5 +11,16 @@ CREATE TABLE players (
     finals_mvp INT DEFAULT 0 CHECK (finals_mvp >= 0),
     dpoy INT DEFAULT 0 CHECK (dpoy >= 0),
     roty INT DEFAULT 0 CHECK (roty >= 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE teams (
+    name TEXT NOT NULL,
+    abbreviation VARCHAR(3) NOT NULL,
+    conference TEXT NOT NULL CHECK (conference IN ('Eastern', 'Western')),
+    division TEXT NOT NULL,
+    city TEXT NOT NULL,
+    championships INT DEFAULT 0 CHECK (championships >= 0),
+    logo_url TEXT DEFAULT '',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

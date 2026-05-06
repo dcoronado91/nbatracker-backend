@@ -1,3 +1,4 @@
+-- ─── Players ──────────────────────────────────────────────────
 INSERT INTO players (name, team, image_url, championships, mvp, finals_mvp, dpoy, roty) VALUES
 ('LeBron James',            'Lakers',        'https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png',    4,4,4,0,1),
 ('Michael Jordan',          'Bulls',         'https://cdn.nba.com/headshots/nba/latest/1040x760/893.png',     6,5,6,1,1),
@@ -9,7 +10,7 @@ INSERT INTO players (name, team, image_url, championships, mvp, finals_mvp, dpoy
 ('Magic Johnson',           'Lakers',        'https://cdn.nba.com/headshots/nba/latest/1040x760/77142.png',   5,3,3,0,1),
 ('Larry Bird',              'Celtics',       'https://cdn.nba.com/headshots/nba/latest/1040x760/1449.png',    3,3,2,0,1),
 ('Giannis Antetokounmpo',   'Bucks',         'https://cdn.nba.com/headshots/nba/latest/1040x760/203507.png',  1,2,1,1,0),
- 
+
 ('Nikola Jokic',            'Nuggets',       'https://cdn.nba.com/headshots/nba/latest/1040x760/203999.png',  1,2,1,0,0),
 ('Dirk Nowitzki',           'Mavericks',     'https://cdn.nba.com/headshots/nba/latest/1040x760/1717.png',    1,1,1,0,0),
 ('Dwyane Wade',             'Heat',          'https://cdn.nba.com/headshots/nba/latest/1040x760/2548.png',    3,0,1,0,0),
@@ -20,7 +21,7 @@ INSERT INTO players (name, team, image_url, championships, mvp, finals_mvp, dpoy
 ('Russell Westbrook',       'Clippers',      'https://cdn.nba.com/headshots/nba/latest/1040x760/201566.png',  0,1,0,0,0),
 ('Damian Lillard',          'Bucks',         'https://cdn.nba.com/headshots/nba/latest/1040x760/203081.png',  0,0,0,0,0),
 ('Anthony Davis',           'Lakers',        'https://cdn.nba.com/headshots/nba/latest/1040x760/203076.png',  1,0,0,0,0),
- 
+
 ('Jayson Tatum',            'Celtics',       'https://cdn.nba.com/headshots/nba/latest/1040x760/1628369.png', 1,0,0,0,0),
 ('Jimmy Butler',            'Heat',          'https://cdn.nba.com/headshots/nba/latest/1040x760/202710.png',  0,0,0,0,0),
 ('Joel Embiid',             '76ers',         'https://cdn.nba.com/headshots/nba/latest/1040x760/203954.png',  0,1,0,0,0),
@@ -31,7 +32,7 @@ INSERT INTO players (name, team, image_url, championships, mvp, finals_mvp, dpoy
 ('Donovan Mitchell',        'Cavaliers',     'https://cdn.nba.com/headshots/nba/latest/1040x760/1628378.png', 0,0,0,0,0),
 ('Ja Morant',               'Grizzlies',     'https://cdn.nba.com/headshots/nba/latest/1040x760/1629630.png', 0,0,0,0,1),
 ('Zion Williamson',         'Pelicans',      'https://cdn.nba.com/headshots/nba/latest/1040x760/1629627.png', 0,0,0,0,0),
- 
+
 ('Kyrie Irving',            'Mavericks',     'https://cdn.nba.com/headshots/nba/latest/1040x760/202681.png',  1,0,0,0,1),
 ('Klay Thompson',           'Warriors',      'https://cdn.nba.com/headshots/nba/latest/1040x760/202691.png',  4,0,0,0,0),
 ('Draymond Green',          'Warriors',      'https://cdn.nba.com/headshots/nba/latest/1040x760/203110.png',  4,0,0,1,0),
@@ -42,7 +43,7 @@ INSERT INTO players (name, team, image_url, championships, mvp, finals_mvp, dpoy
 ('Zach LaVine',             'Bulls',         'https://cdn.nba.com/headshots/nba/latest/1040x760/203897.png',  0,0,0,0,0),
 ('Karl-Anthony Towns',      'Timberwolves',  'https://cdn.nba.com/headshots/nba/latest/1040x760/1626157.png', 0,0,0,0,1),
 ('Rudy Gobert',             'Timberwolves',  'https://cdn.nba.com/headshots/nba/latest/1040x760/203497.png',  0,0,0,3,0),
- 
+
 ('Ben Simmons',             'Nets',          'https://cdn.nba.com/headshots/nba/latest/1040x760/1627732.png', 0,0,0,0,1),
 ('Pascal Siakam',           'Pacers',        'https://cdn.nba.com/headshots/nba/latest/1040x760/1627783.png', 1,0,0,0,0),
 ('Fred VanVleet',           'Rockets',       'https://cdn.nba.com/headshots/nba/latest/1040x760/1627832.png', 1,0,0,0,0),
@@ -53,7 +54,7 @@ INSERT INTO players (name, team, image_url, championships, mvp, finals_mvp, dpoy
 ('De''Aaron Fox',           'Kings',         'https://cdn.nba.com/headshots/nba/latest/1040x760/1628368.png', 0,0,0,0,0),
 ('Domantas Sabonis',        'Kings',         'https://cdn.nba.com/headshots/nba/latest/1040x760/1627734.png', 0,0,0,0,0),
 ('Brandon Ingram',          'Pelicans',      'https://cdn.nba.com/headshots/nba/latest/1040x760/1627742.png', 0,0,0,0,0),
- 
+
 ('C.J. McCollum',           'Pelicans',      'https://cdn.nba.com/headshots/nba/latest/1040x760/203468.png',  0,0,0,0,0),
 ('Al Horford',              'Celtics',       'https://cdn.nba.com/headshots/nba/latest/1040x760/201143.png',  1,0,0,0,0),
 ('Brook Lopez',             'Bucks',         'https://cdn.nba.com/headshots/nba/latest/1040x760/201572.png',  1,0,0,1,0),
@@ -64,7 +65,7 @@ INSERT INTO players (name, team, image_url, championships, mvp, finals_mvp, dpoy
 ('Austin Reaves',           'Lakers',        'https://cdn.nba.com/headshots/nba/latest/1040x760/1630559.png', 0,0,0,0,0),
 ('Jordan Poole',            'Wizards',       'https://cdn.nba.com/headshots/nba/latest/1040x760/1629673.png', 1,0,0,0,0),
 ('Tyrese Maxey',            '76ers',         'https://cdn.nba.com/headshots/nba/latest/1040x760/1630178.png', 0,0,0,0,0),
- 
+
 ('Bam Adebayo',             'Heat',          'https://cdn.nba.com/headshots/nba/latest/1040x760/1628389.png', 0,0,0,0,0),
 ('Tyler Herro',             'Heat',          'https://cdn.nba.com/headshots/nba/latest/1040x760/1629639.png', 0,0,0,0,0),
 ('Andrew Nembhard',         'Pacers',        'https://cdn.nba.com/headshots/nba/latest/1040x760/1631101.png', 0,0,0,0,0),
@@ -75,7 +76,7 @@ INSERT INTO players (name, team, image_url, championships, mvp, finals_mvp, dpoy
 ('John Collins',            'Jazz',          'https://cdn.nba.com/headshots/nba/latest/1040x760/1628381.png', 0,0,0,0,0),
 ('Walker Kessler',          'Jazz',          'https://cdn.nba.com/headshots/nba/latest/1040x760/1631117.png', 0,0,0,0,0),
 ('Lauri Markkanen',         'Jazz',          'https://cdn.nba.com/headshots/nba/latest/1040x760/1628455.png', 0,0,0,0,0),
- 
+
 ('Shai Gilgeous-Alexander', 'Thunder',       'https://cdn.nba.com/headshots/nba/latest/1040x760/1628983.png', 0,0,0,0,0),
 ('Josh Giddey',             'Bulls',         'https://cdn.nba.com/headshots/nba/latest/1040x760/1630581.png', 0,0,0,0,0),
 ('Chet Holmgren',           'Thunder',       'https://cdn.nba.com/headshots/nba/latest/1040x760/1631096.png', 0,0,0,0,0),
@@ -86,7 +87,7 @@ INSERT INTO players (name, team, image_url, championships, mvp, finals_mvp, dpoy
 ('Jeremy Sochan',           'Spurs',         'https://cdn.nba.com/headshots/nba/latest/1040x760/1631098.png', 0,0,0,0,0),
 ('Franz Wagner',            'Magic',         'https://cdn.nba.com/headshots/nba/latest/1040x760/1630532.png', 0,0,0,0,0),
 ('Paolo Banchero',          'Magic',         'https://cdn.nba.com/headshots/nba/latest/1040x760/1631094.png', 0,0,0,0,1),
- 
+
 ('Jalen Suggs',             'Magic',         'https://cdn.nba.com/headshots/nba/latest/1040x760/1630591.png', 0,0,0,0,0),
 ('Cole Anthony',            'Magic',         'https://cdn.nba.com/headshots/nba/latest/1040x760/1630175.png', 0,0,0,0,0),
 ('Mikal Bridges',           'Nets',          'https://cdn.nba.com/headshots/nba/latest/1040x760/1628969.png', 0,0,0,0,0),
@@ -97,3 +98,36 @@ INSERT INTO players (name, team, image_url, championships, mvp, finals_mvp, dpoy
 ('Malcolm Brogdon',         'Trail Blazers', 'https://cdn.nba.com/headshots/nba/latest/1040x760/1627763.png', 0,0,0,0,1),
 ('Anfernee Simons',         'Trail Blazers', 'https://cdn.nba.com/headshots/nba/latest/1040x760/1629014.png', 0,0,0,0,0),
 ('Scoot Henderson',         'Trail Blazers', 'https://cdn.nba.com/headshots/nba/latest/1040x760/1641706.png', 0,0,0,0,0);
+
+-- ─── Teams ────────────────────────────────────────────────────
+INSERT INTO teams (name, city, abbreviation, championships, logo_url, conference, division) VALUES
+('Atlanta Hawks',          'Atlanta',        'ATL', 1,  'https://a.espncdn.com/i/teamlogos/nba/500/atl.png',  'Eastern', 'Southeast'),
+('Boston Celtics',         'Boston',         'BOS', 17, 'https://a.espncdn.com/i/teamlogos/nba/500/bos.png',  'Eastern', 'Atlantic'),
+('Brooklyn Nets',          'Brooklyn',       'BKN', 0,  'https://a.espncdn.com/i/teamlogos/nba/500/bkn.png',  'Eastern', 'Atlantic'),
+('Charlotte Hornets',      'Charlotte',      'CHA', 0,  'https://a.espncdn.com/i/teamlogos/nba/500/cha.png',  'Eastern', 'Southeast'),
+('Chicago Bulls',          'Chicago',        'CHI', 6,  'https://a.espncdn.com/i/teamlogos/nba/500/chi.png',  'Eastern', 'Central'),
+('Cleveland Cavaliers',    'Cleveland',      'CLE', 1,  'https://a.espncdn.com/i/teamlogos/nba/500/cle.png',  'Eastern', 'Central'),
+('Dallas Mavericks',       'Dallas',         'DAL', 1,  'https://a.espncdn.com/i/teamlogos/nba/500/dal.png',  'Western', 'Southwest'),
+('Denver Nuggets',         'Denver',         'DEN', 1,  'https://a.espncdn.com/i/teamlogos/nba/500/den.png',  'Western', 'Northwest'),
+('Detroit Pistons',        'Detroit',        'DET', 3,  'https://a.espncdn.com/i/teamlogos/nba/500/det.png',  'Eastern', 'Central'),
+('Golden State Warriors',  'San Francisco',  'GSW', 7,  'https://a.espncdn.com/i/teamlogos/nba/500/gs.png',   'Western', 'Pacific'),
+('Houston Rockets',        'Houston',        'HOU', 2,  'https://a.espncdn.com/i/teamlogos/nba/500/hou.png',  'Western', 'Southwest'),
+('Indiana Pacers',         'Indianapolis',   'IND', 0,  'https://a.espncdn.com/i/teamlogos/nba/500/ind.png',  'Eastern', 'Central'),
+('Los Angeles Clippers',   'Los Angeles',    'LAC', 0,  'https://a.espncdn.com/i/teamlogos/nba/500/lac.png',  'Western', 'Pacific'),
+('Los Angeles Lakers',     'Los Angeles',    'LAL', 17, 'https://a.espncdn.com/i/teamlogos/nba/500/lal.png',  'Western', 'Pacific'),
+('Memphis Grizzlies',      'Memphis',        'MEM', 0,  'https://a.espncdn.com/i/teamlogos/nba/500/mem.png',  'Western', 'Southwest'),
+('Miami Heat',             'Miami',          'MIA', 3,  'https://a.espncdn.com/i/teamlogos/nba/500/mia.png',  'Eastern', 'Southeast'),
+('Milwaukee Bucks',        'Milwaukee',      'MIL', 2,  'https://a.espncdn.com/i/teamlogos/nba/500/mil.png',  'Eastern', 'Central'),
+('Minnesota Timberwolves', 'Minneapolis',    'MIN', 0,  'https://a.espncdn.com/i/teamlogos/nba/500/min.png',  'Western', 'Northwest'),
+('New Orleans Pelicans',   'New Orleans',    'NOP', 0,  'https://a.espncdn.com/i/teamlogos/nba/500/no.png',   'Western', 'Southwest'),
+('New York Knicks',        'New York',       'NYK', 2,  'https://a.espncdn.com/i/teamlogos/nba/500/ny.png',   'Eastern', 'Atlantic'),
+('Oklahoma City Thunder',  'Oklahoma City',  'OKC', 0,  'https://a.espncdn.com/i/teamlogos/nba/500/okc.png',  'Western', 'Northwest'),
+('Orlando Magic',          'Orlando',        'ORL', 0,  'https://a.espncdn.com/i/teamlogos/nba/500/orl.png',  'Eastern', 'Southeast'),
+('Philadelphia 76ers',     'Philadelphia',   'PHI', 3,  'https://a.espncdn.com/i/teamlogos/nba/500/phi.png',  'Eastern', 'Atlantic'),
+('Phoenix Suns',           'Phoenix',        'PHX', 0,  'https://a.espncdn.com/i/teamlogos/nba/500/phx.png',  'Western', 'Pacific'),
+('Portland Trail Blazers', 'Portland',       'POR', 1,  'https://a.espncdn.com/i/teamlogos/nba/500/por.png',  'Western', 'Northwest'),
+('Sacramento Kings',       'Sacramento',     'SAC', 1,  'https://a.espncdn.com/i/teamlogos/nba/500/sac.png',  'Western', 'Pacific'),
+('San Antonio Spurs',      'San Antonio',    'SAS', 5,  'https://a.espncdn.com/i/teamlogos/nba/500/sa.png',   'Western', 'Southwest'),
+('Toronto Raptors',        'Toronto',        'TOR', 1,  'https://a.espncdn.com/i/teamlogos/nba/500/tor.png',  'Eastern', 'Atlantic'),
+('Utah Jazz',              'Salt Lake City', 'UTA', 0,  'https://a.espncdn.com/i/teamlogos/nba/500/utah.png', 'Western', 'Northwest'),
+('Washington Wizards',     'Washington',     'WAS', 1,  'https://a.espncdn.com/i/teamlogos/nba/500/wsh.png',  'Eastern', 'Southeast');
