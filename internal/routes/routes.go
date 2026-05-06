@@ -5,29 +5,36 @@ import (
 	"net/http"
 )
 
-func RegisterRoutes(mux *http.ServeMux, handler *handlers.PlayerHandler) {
+func RegisterRoutes(mux *http.ServeMux, playerHandler *handlers.PlayerHandler, teamHandler *handlers.TeamHandler) {
 
-	// GET /players + POST /players
 	mux.HandleFunc("/players", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
-			handler.GetPlayers(w, r)
+			playerHandler.GetPlayers(w, r)
 		case http.MethodPost:
-			handler.CreatePlayer(w, r)
+			playerHandler.CreatePlayer(w, r)
 		default:
 			http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
 		}
 	})
 
-	// GET /players/:id
 	mux.HandleFunc("/players/", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case http.MethodGet:
-			handler.GetPlayerByID(w, r)
+			playerHandler.GetPlayerByID(w, r)
 		case http.MethodPut:
-			handler.UpdatePlayer(w, r)
+			playerHandler.UpdatePlayer(w, r)
 		case http.MethodDelete:
-			handler.DeletePlayer(w, r)
+			playerHandler.DeletePlayer(w, r)
+		default:
+			http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
+		}
+	})
+
+	mux.HandleFunc("/teams", func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
+		case http.MethodGet:
+			teamHandler.GetTeams(w, r)
 		default:
 			http.Error(w, "Método no permitido", http.StatusMethodNotAllowed)
 		}

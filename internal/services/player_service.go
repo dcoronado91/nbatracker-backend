@@ -14,6 +14,10 @@ func (s *PlayerService) GetPlayers() ([]models.Player, error) {
     return s.Repo.GetAll()
 }
 
+func (s *PlayerService) GetPlayersPaginated(page, limit int) ([]models.Player, int, error) {
+    return s.Repo.GetPaginated(page, limit)
+}
+
 func (s *PlayerService) GetPlayerByID(id int) (*models.Player, error) {
 	return s.Repo.GetByID(id)
 }
