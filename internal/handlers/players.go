@@ -23,25 +23,39 @@ type paginatedResponse struct {
 	Pages int             `json:"pages"`
 }
 
-// GET /players?page=1&limit=10
+// helper para errores JSON
+func jsonError(w http.ResponseWriter, msg string, code int) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+	json.NewEncoder(w).Encode(map[string]string{
+		"error": msg,
+	})
+}
+
+// GET /players?page=&limit=&q=&sort=&order=
 func (h *PlayerHandler) GetPlayers(w http.ResponseWriter, r *http.Request) {
 	page := 1
 	limit := 9
+
+	q := r.URL.Query().Get("q")
+	sort := r.URL.Query().Get("sort")
+	order := r.URL.Query().Get("order")
 
 	if p := r.URL.Query().Get("page"); p != "" {
 		if v, err := strconv.Atoi(p); err == nil && v > 0 {
 			page = v
 		}
 	}
+
 	if l := r.URL.Query().Get("limit"); l != "" {
-		if v, err := strconv.Atoi(l); err == nil && v > 0 && v <= 1000 {
+		if v, err := strconv.Atoi(l); err == nil && v > 0 && v <= 100 {
 			limit = v
 		}
 	}
 
-	players, total, err := h.Service.GetPlayersPaginated(page, limit)
+	players, total, err := h.Service.GetPlayersAdvanced(page, limit, q, sort, order)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		jsonError(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -54,6 +68,7 @@ func (h *PlayerHandler) GetPlayers(w http.ResponseWriter, r *http.Request) {
 		Limit: limit,
 		Pages: pages,
 	}
+
 	if resp.Data == nil {
 		resp.Data = []models.Player{}
 	}
@@ -67,19 +82,19 @@ func (h *PlayerHandler) GetPlayerByID(w http.ResponseWriter, r *http.Request) {
 	parts := strings.Split(r.URL.Path, "/")
 
 	if len(parts) < 3 {
-		http.Error(w, "ID requerido", http.StatusBadRequest)
+		jsonError(w, "ID requerido", http.StatusBadRequest)
 		return
 	}
 
 	id, err := strconv.Atoi(parts[2])
 	if err != nil {
-		http.Error(w, "ID inválido", http.StatusBadRequest)
+		jsonError(w, "ID inválido", http.StatusBadRequest)
 		return
 	}
 
 	player, err := h.Service.GetPlayerByID(id)
 	if err != nil {
-		http.Error(w, "Jugador no encontrado", http.StatusNotFound)
+		jsonError(w, "Jugador no encontrado", http.StatusNotFound)
 		return
 	}
 
@@ -93,19 +108,18 @@ func (h *PlayerHandler) CreatePlayer(w http.ResponseWriter, r *http.Request) {
 
 	err := json.NewDecoder(r.Body).Decode(&p)
 	if err != nil {
-		http.Error(w, "JSON inválido", http.StatusBadRequest)
+		jsonError(w, "JSON inválido", http.StatusBadRequest)
 		return
 	}
 
-	// validación de numeros negativos
 	if p.Championships < 0 || p.MVP < 0 || p.FinalsMVP < 0 || p.DPOY < 0 || p.ROTY < 0 {
-		http.Error(w, "Los valores no pueden ser negativos", http.StatusBadRequest)
+		jsonError(w, "Los valores no pueden ser negativos", http.StatusBadRequest)
 		return
 	}
 
 	err = h.Service.CreatePlayer(&p)
 	if err != nil {
-		http.Error(w, "Error al crear jugador", http.StatusInternalServerError)
+		jsonError(w, "Error al crear jugador", http.StatusInternalServerError)
 		return
 	}
 
@@ -119,39 +133,37 @@ func (h *PlayerHandler) UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 	parts := strings.Split(r.URL.Path, "/")
 
 	if len(parts) < 3 {
-		http.Error(w, "ID requerido", http.StatusBadRequest)
+		jsonError(w, "ID requerido", http.StatusBadRequest)
 		return
 	}
 
 	id, err := strconv.Atoi(parts[2])
 	if err != nil {
-		http.Error(w, "ID inválido", http.StatusBadRequest)
+		jsonError(w, "ID inválido", http.StatusBadRequest)
 		return
 	}
 
 	var p models.Player
 	err = json.NewDecoder(r.Body).Decode(&p)
 	if err != nil {
-		http.Error(w, "JSON inválido", http.StatusBadRequest)
+		jsonError(w, "JSON inválido", http.StatusBadRequest)
 		return
 	}
 
-	// validacion de campos numericos no negativos
 	if p.Championships < 0 || p.MVP < 0 || p.FinalsMVP < 0 || p.DPOY < 0 || p.ROTY < 0 {
-		http.Error(w, "Los valores no pueden ser negativos", http.StatusBadRequest)
+		jsonError(w, "Los valores no pueden ser negativos", http.StatusBadRequest)
 		return
 	}
 
 	err = h.Service.UpdatePlayer(id, &p)
 	if err != nil {
-		http.Error(w, "Error al actualizar jugador", http.StatusInternalServerError)
+		jsonError(w, "Error al actualizar jugador", http.StatusInternalServerError)
 		return
 	}
 
-	// devolver jugador actualizado
 	updatedPlayer, err := h.Service.GetPlayerByID(id)
 	if err != nil {
-		http.Error(w, "Error al obtener jugador actualizado", http.StatusInternalServerError)
+		jsonError(w, "Error al obtener jugador actualizado", http.StatusInternalServerError)
 		return
 	}
 
@@ -164,23 +176,23 @@ func (h *PlayerHandler) DeletePlayer(w http.ResponseWriter, r *http.Request) {
 	parts := strings.Split(r.URL.Path, "/")
 
 	if len(parts) < 3 {
-		http.Error(w, "ID requerido", http.StatusBadRequest)
+		jsonError(w, "ID requerido", http.StatusBadRequest)
 		return
 	}
 
 	id, err := strconv.Atoi(parts[2])
 	if err != nil {
-		http.Error(w, "ID inválido", http.StatusBadRequest)
+		jsonError(w, "ID inválido", http.StatusBadRequest)
 		return
 	}
 
 	err = h.Service.DeletePlayer(id)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			http.Error(w, "Jugador no encontrado", http.StatusNotFound)
+			jsonError(w, "Jugador no encontrado", http.StatusNotFound)
 			return
 		}
-		http.Error(w, "Error al eliminar jugador", http.StatusInternalServerError)
+		jsonError(w, "Error al eliminar jugador", http.StatusInternalServerError)
 		return
 	}
 

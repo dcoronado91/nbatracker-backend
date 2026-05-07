@@ -33,3 +33,7 @@ func (s *PlayerService) UpdatePlayer(id int, p *models.Player) error {
 func (s *PlayerService) DeletePlayer(id int) error {
 	return s.Repo.Delete(id)
 }
+
+func (s *PlayerService) GetPlayersAdvanced(page, limit int, q, sort, order string) ([]models.Player, int, error) {
+	return s.Repo.GetAdvanced(page, limit, q, sort, order)
+}
