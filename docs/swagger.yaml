@@ -1,0 +1,161 @@
+basePath: /
+definitions:
+  handlers.paginatedResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/models.Player'
+        type: array
+      limit:
+        type: integer
+      page:
+        type: integer
+      pages:
+        type: integer
+      total:
+        type: integer
+    type: object
+  models.Player:
+    properties:
+      championships:
+        type: integer
+      created_at:
+        description: "\U0001F448 nuevo campo"
+        type: string
+      dpoy:
+        type: integer
+      finals_mvp:
+        type: integer
+      id:
+        type: integer
+      image_url:
+        type: string
+      mvp:
+        type: integer
+      name:
+        type: string
+      roty:
+        type: integer
+      team:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API para manejar jugadores NBA
+  title: NBA Tracker API
+  version: "1.0"
+paths:
+  /players:
+    get:
+      consumes:
+      - application/json
+      description: Obtener lista de jugadores con paginación, búsqueda y ordenamiento
+      parameters:
+      - description: Página
+        in: query
+        name: page
+        type: integer
+      - description: Límite
+        in: query
+        name: limit
+        type: integer
+      - description: Búsqueda
+        in: query
+        name: q
+        type: string
+      - description: Campo
+        in: query
+        name: sort
+        type: string
+      - description: asc|desc
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.paginatedResponse'
+      summary: Listar jugadores
+      tags:
+      - players
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Jugador
+        in: body
+        name: player
+        required: true
+        schema:
+          $ref: '#/definitions/models.Player'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.Player'
+      summary: Crear jugador
+      tags:
+      - players
+  /players/{id}:
+    delete:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: No Content
+      summary: Eliminar jugador
+      tags:
+      - players
+    get:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Player'
+        "404":
+          description: Not Found
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Obtener jugador por ID
+      tags:
+      - players
+    put:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Jugador
+        in: body
+        name: player
+        required: true
+        schema:
+          $ref: '#/definitions/models.Player'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Player'
+      summary: Actualizar jugador
+      tags:
+      - players
+swagger: "2.0"

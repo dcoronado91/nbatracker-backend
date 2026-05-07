@@ -190,8 +190,8 @@ func (r *PlayerRepository) GetAdvanced(page, limit int, q, sort, order string) (
 		sortField = "id"
 	}
 
-	if order != "asc" {
-		order = "desc"
+	if order != "desc" {
+		order = "asc"
 	}
 
 	where := ""

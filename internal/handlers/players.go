@@ -33,6 +33,19 @@ func jsonError(w http.ResponseWriter, msg string, code int) {
 }
 
 // GET /players?page=&limit=&q=&sort=&order=
+// GetPlayers godoc
+// @Summary Listar jugadores
+// @Description Obtener lista de jugadores con paginación, búsqueda y ordenamiento
+// @Tags players
+// @Accept json
+// @Produce json
+// @Param page query int false "Página"
+// @Param limit query int false "Límite"
+// @Param q query string false "Búsqueda"
+// @Param sort query string false "Campo"
+// @Param order query string false "asc|desc"
+// @Success 200 {object} paginatedResponse
+// @Router /players [get]
 func (h *PlayerHandler) GetPlayers(w http.ResponseWriter, r *http.Request) {
 	page := 1
 	limit := 9
@@ -75,10 +88,16 @@ func (h *PlayerHandler) GetPlayers(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(resp)
-	json.NewEncoder(w).Encode(resp)
 }
 
 // GET /players/:id
+// GetPlayerByID godoc
+// @Summary Obtener jugador por ID
+// @Tags players
+// @Param id path int true "ID"
+// @Success 200 {object} models.Player
+// @Failure 404 {object} map[string]string
+// @Router /players/{id} [get]
 func (h *PlayerHandler) GetPlayerByID(w http.ResponseWriter, r *http.Request) {
 	parts := strings.Split(r.URL.Path, "/")
 
@@ -104,6 +123,14 @@ func (h *PlayerHandler) GetPlayerByID(w http.ResponseWriter, r *http.Request) {
 }
 
 // POST /players
+// CreatePlayer godoc
+// @Summary Crear jugador
+// @Tags players
+// @Accept json
+// @Produce json
+// @Param player body models.Player true "Jugador"
+// @Success 201 {object} models.Player
+// @Router /players [post]
 func (h *PlayerHandler) CreatePlayer(w http.ResponseWriter, r *http.Request) {
 	var p models.Player
 
@@ -130,6 +157,13 @@ func (h *PlayerHandler) CreatePlayer(w http.ResponseWriter, r *http.Request) {
 }
 
 // PUT /players/:id
+// UpdatePlayer godoc
+// @Summary Actualizar jugador
+// @Tags players
+// @Param id path int true "ID"
+// @Param player body models.Player true "Jugador"
+// @Success 200 {object} models.Player
+// @Router /players/{id} [put]
 func (h *PlayerHandler) UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 	parts := strings.Split(r.URL.Path, "/")
 
@@ -173,6 +207,12 @@ func (h *PlayerHandler) UpdatePlayer(w http.ResponseWriter, r *http.Request) {
 }
 
 // DELETE /players/:id
+// DeletePlayer godoc
+// @Summary Eliminar jugador
+// @Tags players
+// @Param id path int true "ID"
+// @Success 204
+// @Router /players/{id} [delete]
 func (h *PlayerHandler) DeletePlayer(w http.ResponseWriter, r *http.Request) {
 	parts := strings.Split(r.URL.Path, "/")
 

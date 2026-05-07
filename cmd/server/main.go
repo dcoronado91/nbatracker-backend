@@ -7,12 +7,22 @@ import (
 
 	"github.com/joho/godotenv"
 
+	_ "nbatracker-backend/docs"
+
+	httpSwagger "github.com/swaggo/http-swagger"
+
 	"nbatracker-backend/internal/db"
 	"nbatracker-backend/internal/handlers"
 	"nbatracker-backend/internal/repository"
 	"nbatracker-backend/internal/routes"
 	"nbatracker-backend/internal/services"
 )
+
+// @title NBA Tracker API
+// @version 1.0
+// @description API para manejar jugadores NBA
+// @host localhost:8080
+// @BasePath /
 
 func main() {
 	err := godotenv.Load()
@@ -26,16 +36,21 @@ func main() {
 	}
 
 	// Players
-	playerRepo    := &repository.PlayerRepository{DB: database}
+	playerRepo := &repository.PlayerRepository{DB: database}
 	playerService := &services.PlayerService{Repo: playerRepo}
 	playerHandler := &handlers.PlayerHandler{Service: playerService}
 
 	// Teams
-	teamRepo    := &repository.TeamRepository{DB: database}
+	teamRepo := &repository.TeamRepository{DB: database}
 	teamService := &services.TeamService{Repo: teamRepo}
 	teamHandler := &handlers.TeamHandler{Service: teamService}
 
 	mux := http.NewServeMux()
+
+	// registrar swagger
+	mux.Handle("/swagger/", httpSwagger.WrapHandler)
+
+	// rutas normales
 	routes.RegisterRoutes(mux, playerHandler, teamHandler)
 
 	port := os.Getenv("PORT")

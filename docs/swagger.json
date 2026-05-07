@@ -1,0 +1,246 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "API para manejar jugadores NBA",
+        "title": "NBA Tracker API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/players": {
+            "get": {
+                "description": "Obtener lista de jugadores con paginación, búsqueda y ordenamiento",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "players"
+                ],
+                "summary": "Listar jugadores",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Página",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Límite",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Búsqueda",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Campo",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "asc|desc",
+                        "name": "order",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/handlers.paginatedResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "players"
+                ],
+                "summary": "Crear jugador",
+                "parameters": [
+                    {
+                        "description": "Jugador",
+                        "name": "player",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Player"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.Player"
+                        }
+                    }
+                }
+            }
+        },
+        "/players/{id}": {
+            "get": {
+                "tags": [
+                    "players"
+                ],
+                "summary": "Obtener jugador por ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Player"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "players"
+                ],
+                "summary": "Actualizar jugador",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Jugador",
+                        "name": "player",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Player"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Player"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "players"
+                ],
+                "summary": "Eliminar jugador",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "handlers.paginatedResponse": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Player"
+                    }
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "page": {
+                    "type": "integer"
+                },
+                "pages": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Player": {
+            "type": "object",
+            "properties": {
+                "championships": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "description": "👈 nuevo campo",
+                    "type": "string"
+                },
+                "dpoy": {
+                    "type": "integer"
+                },
+                "finals_mvp": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "image_url": {
+                    "type": "string"
+                },
+                "mvp": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "roty": {
+                    "type": "integer"
+                },
+                "team": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
