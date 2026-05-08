@@ -1,0 +1,25 @@
+# Instrucciones:
+# 1. Clona ambos repos en la misma carpeta:
+#      git clone https://github.com/dcoronado91/nbatracker-backend
+#      git clone https://github.com/dcoronado91/nbatracker-frontend
+# 2. Copia este archivo: cp docker-compose.example.yml docker-compose.yml
+# 3. Crea un .env basado en .env.example con tu DATABASE_URL real
+# 4. Corre: docker compose up --build
+
+services:
+  backend:
+    build: .
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env          # Crea .env basado en .env.example
+
+  frontend:
+    build:
+      context: ../nbatracker-frontend   # el repo del frontend debe estar al mismo nivel
+      args:
+        VITE_API_URL: http://localhost:8080   # URL del backend vista desde el navegador
+    ports:
+      - "80:80"
+    depends_on:
+      - backend

@@ -15,3 +15,6 @@
 
 # archivos de configuración local
 *.env
+
+# docker-compose con datos reales (usa docker-compose.example.yml como plantilla)
+docker-compose.yml
